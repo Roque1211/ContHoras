@@ -29,7 +29,7 @@ namespace Api.Controllers
             this.configuration = configuration;
             _usuarioBL = usuarioBL;
         }
- 
+
         [HttpPost]
         [AllowAnonymous]
         [EnableCors("EnableCorsForLocalhost")]
