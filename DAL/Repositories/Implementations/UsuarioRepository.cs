@@ -20,9 +20,9 @@ namespace DAL.Repositories.Implementations
         {
             var miUser = new User();
             var userinfo = new UsuarioInfo();
-            if (_context.User.Any(u => u.Nick == usuarioDTO.nick && u.Pwd == usuarioDTO.pwd)) 
+            if (_context.User.Any(u => u.Mail == usuarioDTO.mail && u.Pwd == usuarioDTO.pwd)) 
             {
-                var query = _context.User.Where(u => u.Nick == usuarioDTO.nick && u.Pwd == usuarioDTO.pwd);
+                var query = _context.User.Where(u => u.Mail == usuarioDTO.mail && u.Pwd == usuarioDTO.pwd);
                 miUser = query.First<User>();
                 userinfo.Id = new Guid(miUser.Id);
                 userinfo.Nombre = miUser.Name;
