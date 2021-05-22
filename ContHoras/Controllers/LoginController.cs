@@ -19,15 +19,17 @@ namespace Api.Controllers
     {
         // usuario BL
         public IUsuarioBL _usuarioBL { get; set; }
+        public ISessionBL _sessionBL { get; set; }
         private readonly IConfiguration configuration;
 
-        public LoginController(IConfiguration configuration, IUsuarioBL usuarioBL)
+        public LoginController(IConfiguration configuration, IUsuarioBL usuarioBL, ISessionBL sessionBL)
         {
-   //         _usuarioBL = usuarioBL;
             // TRAEMOS EL OBJETO DE CONFIGURACIÓN (appsettings.json)
             // MEDIANTE INYECCIÓN DE DEPENDENCIAS.
             this.configuration = configuration;
+
             _usuarioBL = usuarioBL;
+            _sessionBL = sessionBL;
         }
 
         [HttpPost]
@@ -38,20 +40,38 @@ namespace Api.Controllers
             var _userInfo = await AutenticarUsuarioAsync(usuarioDTO);
             if (_userInfo != null)
             {
-                return Ok(new { token = GenerarTokenJWT(_userInfo) });
+                String token = GenerarTokenJWT(_userInfo);
+                _sessionBL.StartSession(token,usuarioDTO.id);
+                return Ok(token);
             }
             else
             {
                 return Unauthorized();
             }
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetRole(String token)
+        {
+            if (_sessionBL.CheckToken == true)
+            {
+                return Ok(_sessionBL.GetRole(token));
+            }
+            else
+            {
+                return Unauthorized();
+            }
+        }
+
+        //
+        //
         // COMPROBAMOS SI EL USUARIO EXISTE EN LA BASE DE DATOS 
         private async Task<UsuarioInfo> AutenticarUsuarioAsync(UsuarioDTO usuarioDTO)
         {
             return _usuarioBL.Login(usuarioDTO);
         }
 
-        // GENERAMOS EL TOKEN CON LA INFORMACIÓN DEL USUARIO
+        // GENERAMOS EL TOKEN CON LA INFORMACIÓN DEL USUARIO >> a BL
         private string GenerarTokenJWT(UsuarioInfo usuarioInfo)
         {
             // CREAMOS EL HEADER //

@@ -20,7 +20,7 @@ namespace API.Controllers
         {
             _usuarioBL = usuarioBL;
         }
-        // Devuelve todos los usuarios
+        // Devuelve datos del usuario actual
         [HttpGet]
         public IEnumerable<string> Get()
         {

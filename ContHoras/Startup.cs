@@ -45,7 +45,8 @@ namespace ContHoras
                     {
                         builder.WithOrigins("https://localhost")
                                             .AllowAnyHeader()
-                                            .AllowAnyMethod();
+                                            .AllowAnyMethod()
+                                            .AllowAnyOrigin();
                     });
             });
 

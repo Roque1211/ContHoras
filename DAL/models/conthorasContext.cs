@@ -18,6 +18,7 @@ namespace DAL.models
         public virtual DbSet<Cabhoras> Cabhoras { get; set; }
         public virtual DbSet<Linhoras> Linhoras { get; set; }
         public virtual DbSet<Project> Project { get; set; }
+        public virtual DbSet<Session> Session { get; set; }
         public virtual DbSet<User> User { get; set; }
         public virtual DbSet<UserProject> UserProject { get; set; }
 
@@ -110,6 +111,52 @@ namespace DAL.models
                     .HasColumnType("varchar(255)")
                     .HasCharSet("utf8mb4")
                     .HasCollation("utf8mb4_0900_ai_ci");
+            });
+
+            modelBuilder.Entity<Session>(entity =>
+            {
+                entity.HasKey(e => e.Sessid)
+                    .HasName("PRIMARY");
+
+                entity.ToTable("session");
+
+                entity.HasIndex(e => e.Sessid)
+                    .HasName("sessid")
+                    .IsUnique();
+
+                entity.HasIndex(e => e.Sessuser)
+                    .HasName("sessuser");
+
+                entity.Property(e => e.Sessid)
+                    .HasColumnName("sessid")
+                    .HasColumnType("varchar(36)")
+                    .HasCharSet("utf8mb4")
+                    .HasCollation("utf8mb4_0900_ai_ci");
+
+                entity.Property(e => e.Sessend)
+                    .HasColumnName("sessend")
+                    .HasColumnType("date");
+
+                entity.Property(e => e.Sesstart)
+                    .HasColumnName("sesstart")
+                    .HasColumnType("date");
+
+                entity.Property(e => e.Sesstoken)
+                    .HasColumnName("sesstoken")
+                    .HasColumnType("varchar(250)")
+                    .HasCharSet("utf8mb4")
+                    .HasCollation("utf8mb4_0900_ai_ci");
+
+                entity.Property(e => e.Sessuser)
+                    .HasColumnName("sessuser")
+                    .HasColumnType("varchar(36)")
+                    .HasCharSet("utf8mb4")
+                    .HasCollation("utf8mb4_0900_ai_ci");
+
+                entity.HasOne(d => d.SessuserNavigation)
+                    .WithMany(p => p.Session)
+                    .HasForeignKey(d => d.Sessuser)
+                    .HasConstraintName("session_ibfk_1");
             });
 
             modelBuilder.Entity<User>(entity =>
