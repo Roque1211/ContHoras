@@ -26,7 +26,6 @@ namespace DAL.models
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
                 optionsBuilder.UseMySql("server=localhost;uid=usuario_hibernate;pwd=1234;database=conthoras", x => x.ServerVersion("8.0.21-mysql"));
             }
         }

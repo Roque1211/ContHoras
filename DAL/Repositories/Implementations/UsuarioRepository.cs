@@ -57,7 +57,7 @@ namespace DAL.Repositories.Implementations
         }
 
         // devuelve la lista de usuarios
-        public IEnumerable<UsuarioDTO> Get()
+        public IEnumerable<UsuarioDTO> GetAll()
         {
             var usuarios = _context.User.ToList();
             List<UsuarioDTO> usuariosdto = new List<UsuarioDTO>();
@@ -91,7 +91,8 @@ namespace DAL.Repositories.Implementations
         // borra un usuario
         public void Delete(string id)
         {
-            throw new NotImplementedException();
+            _context.Session.Remove(_context.Session.Find(id));
+            _context.SaveChanges();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Core.DTO;
+﻿using Core.Common;
+using Core.DTO;
 using DAL.models;
 using DAL.Repositories.Contracts;
 using System;
@@ -30,6 +31,40 @@ namespace DAL.Repositories.Implementations
             _context.SaveChanges();
         }
 
+        // devuelve el rol del usuario de la session actual
+        public string GetRole(String token)
+        {
+            var miSess = _context.Session.Where(b => b.Sesstoken == token).ElementAt(0);
+            return _context.User.Find(miSess.Sessuser).Rol;
+        }
 
-     }
+        // chequea que el token es válido
+        public bool checkToken(string token)
+        {
+            var miSess = _context.Session.Where(b => b.Sesstoken == token).ElementAt(0);
+            if  (miSess.Sesstoken == token && miSess.Sessend == null && (miSess.Sessend.Value.Minute - miSess.Sesstart.Value.Minute) <  Constants.SESSION_EXPIRED_MINUTES)
+            {
+                // session correcta
+
+                return true;
+            } else
+            {
+                // session expirada
+                miSess.Sessend = DateTime.Now;
+                _context.Session.Update(miSess);
+                _context.SaveChanges();
+                return false;
+            }
+        }
+
+        public IEnumerable<string> GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public SessionDTO Get(string token)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

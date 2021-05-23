@@ -13,7 +13,7 @@ namespace BL.Contracts
     {
         UsuarioInfo Login(UsuarioDTO usuarioDTO);
         void Add(string usuarioDTO);
-        IEnumerable<String> Get();
+        IEnumerable<String> GetAll();
         string Get(string id);
         void Delete(string id);
     }

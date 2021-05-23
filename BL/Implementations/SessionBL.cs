@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Security.Claims;
-using System.Text;
 using BL.Contracts;
 using Core.DTO;
 using DAL.Repositories.Contracts;
@@ -16,18 +15,24 @@ namespace BL.Implementations
     public class SessionBL:ISessionBL
     {
         public ISessionRepository _sessionRepository { get; set; }
-        public bool CheckToken { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
+ 
         public SessionBL(SessionRepository sessionRepository)
         {
             _sessionRepository = sessionRepository;
         }
 
+        // check if a token exists and is valid
+        public bool CheckToken(String token)
+        {
+            return _sessionRepository.checkToken(token);
+         }
+
+        // adds a session
         public void Add(SessionDTO sessionDTO)
         {
-            throw new NotImplementedException();
+            _sessionRepository.Add(sessionDTO);
         }
-
+        // comienza una sessioin
         public void StartSession(string token, Guid id)
         {
             // inicia la sesión
@@ -42,17 +47,28 @@ namespace BL.Implementations
             }
         }
 
+        // devuelve role del usuario con un token determinado
         public String GetRole(string token)
         {
-            // devuelve role del usuario
-           return _sessionRepository.GetRole();
+           return _sessionRepository.GetRole(token);
         }
 
-        public void CheckRole(string token)
+        // devuelve todas las sesiones
+        public IEnumerable<string> GetAll()
+        {
+            return _sessionRepository.GetAll();
+        }
+
+        // devuelve la session actual
+        public SessionDTO Get(string token)
+        {
+            return _sessionRepository.Get(token);
+        }
+
+        public bool CheckRole(string token)
         {
             throw new NotImplementedException();
         }
-
     }
 
 }

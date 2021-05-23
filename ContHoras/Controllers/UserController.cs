@@ -14,17 +14,16 @@ namespace API.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        // usuario BL
         public IUsuarioBL _usuarioBL { get; set; }
         public UserController( IUsuarioBL usuarioBL)
         {
             _usuarioBL = usuarioBL;
         }
-        // Devuelve datos del usuario actual
+        // Devuelve datos de todos los usuarios
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<string> GetAll()
         {
-            return _usuarioBL.Get();
+            return _usuarioBL.GetAll();
         }
 
         // GET devuelve un usuario con un id determinado

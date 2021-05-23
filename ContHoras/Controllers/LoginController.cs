@@ -50,28 +50,14 @@ namespace Api.Controllers
             }
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetRole(String token)
-        {
-            if (_sessionBL.CheckToken == true)
-            {
-                return Ok(_sessionBL.GetRole(token));
-            }
-            else
-            {
-                return Unauthorized();
-            }
-        }
 
-        //
-        //
         // COMPROBAMOS SI EL USUARIO EXISTE EN LA BASE DE DATOS 
         private async Task<UsuarioInfo> AutenticarUsuarioAsync(UsuarioDTO usuarioDTO)
         {
             return _usuarioBL.Login(usuarioDTO);
         }
 
-        // GENERAMOS EL TOKEN CON LA INFORMACIÓN DEL USUARIO >> a BL
+        // GENERAMOS EL TOKEN CON LA INFORMACIÓN DEL USUARIO 
         private string GenerarTokenJWT(UsuarioInfo usuarioInfo)
         {
             // CREAMOS EL HEADER //

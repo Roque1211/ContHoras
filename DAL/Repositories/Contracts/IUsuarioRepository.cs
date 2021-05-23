@@ -10,7 +10,7 @@ namespace DAL.Repositories.Contracts
     {
         UsuarioInfo Login(UsuarioDTO usuarioDTO);
         void Add(UsuarioDTO usuarioDTO);
-        IEnumerable<UsuarioDTO> Get();
+        IEnumerable<UsuarioDTO> GetAll();
         User Get(string id);
         void Delete(string id);
     }

@@ -30,9 +30,9 @@ namespace BL.Implementations
         }
 
         // devuelve listado de usuarios
-        public IEnumerable<String> Get()
+        public IEnumerable<String> GetAll()
         {
-            var usuarios = _usuarioRepository.Get();
+            var usuarios = _usuarioRepository.GetAll();
             var strList = new List<String>();
 
             foreach (UsuarioDTO u in  usuarios )
