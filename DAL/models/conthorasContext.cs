@@ -142,7 +142,7 @@ namespace DAL.models
 
                 entity.Property(e => e.Sesstoken)
                     .HasColumnName("sesstoken")
-                    .HasColumnType("varchar(250)")
+                    .HasColumnType("varchar(1024)")
                     .HasCharSet("utf8mb4")
                     .HasCollation("utf8mb4_0900_ai_ci");
 

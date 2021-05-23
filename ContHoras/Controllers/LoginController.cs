@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -42,7 +43,7 @@ namespace Api.Controllers
             {
                 String token = GenerarTokenJWT(_userInfo);
                 _sessionBL.StartSession(token,usuarioDTO.id);
-                return Ok(token);
+                return Ok(JsonConvert.SerializeObject(token));
             }
             else
             {

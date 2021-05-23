@@ -1,14 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Security.Claims;
 using BL.Contracts;
 using Core.DTO;
 using DAL.Repositories.Contracts;
 using DAL.Repositories.Implementations;
-using System.Threading.Tasks;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
 
 namespace BL.Implementations
 {
@@ -16,7 +11,7 @@ namespace BL.Implementations
     {
         public ISessionRepository _sessionRepository { get; set; }
  
-        public SessionBL(SessionRepository sessionRepository)
+        public SessionBL(ISessionRepository sessionRepository)
         {
             _sessionRepository = sessionRepository;
         }
@@ -39,7 +34,7 @@ namespace BL.Implementations
             {
                 var curSession = new SessionDTO();
 
-                curSession.sessid = new Guid();
+                curSession.sessid = Guid.NewGuid();
                 curSession.sesstoken = token;
                 curSession.sesstart = DateTime.Now;
                 curSession.sessend = null;

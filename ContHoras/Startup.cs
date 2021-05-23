@@ -35,6 +35,9 @@ namespace ContHoras
             // aqui las inyecciones interfaz-clase
             services.AddScoped<IUsuarioBL, UsuarioBL>();
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+            services.AddScoped<ISessionBL, SessionBL>();
+            services.AddScoped<ISessionRepository, SessionRepository>();
+
 
             // directivas CORS para permitir comunicaciones entre orígenes del mismo tipo
             // entre localhost de Angular y el backend

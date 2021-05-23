@@ -8,7 +8,7 @@ namespace BL.Contracts
 {
     public interface ISessionBL
     {
-        bool CheckToken(String token);
+        
 
         void Add(SessionDTO sessionDTO);
         void StartSession(string token, Guid id);
@@ -16,5 +16,6 @@ namespace BL.Contracts
         IEnumerable<string> GetAll();
         SessionDTO Get(string token);
         bool CheckRole(string token);
+        bool CheckToken(String token);
     }
 }
