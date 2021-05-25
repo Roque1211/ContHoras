@@ -41,7 +41,8 @@ namespace DAL.Repositories.Implementations
         // chequea que el token es válido
         public bool checkToken(string token)
         {
-            var miSess = _context.Session.Where(b => b.Sesstoken == token).ElementAt(0);
+            var miSess = _context.Session.Single(s => s.Sesstoken == token);
+
             if  (miSess.Sesstoken == token && miSess.Sessend == null && (miSess.Sessend.Value.Minute - miSess.Sesstart.Value.Minute) <  Constants.SESSION_EXPIRED_MINUTES)
             {
                 // session correcta
@@ -57,9 +58,25 @@ namespace DAL.Repositories.Implementations
             }
         }
 
-        public IEnumerable<string> GetAll()
+        public IEnumerable<SessionDTO> GetAll()
         {
-            throw new NotImplementedException();
+            var sessions = _context.Session.ToList();
+            List<SessionDTO> sessionsDTO = new List<SessionDTO>();
+
+            foreach (var s in sessions)
+            {
+                var session = new SessionDTO
+                {
+                    sessid = new Guid(s.Sessid),
+                    sessend = s.Sessend,
+                    sesstart = s.Sesstart,
+                    sesstoken = s.Sesstoken,
+                    sessuser = s.Sessuser,
+                };
+                sessionsDTO.Add(session);
+            }
+
+            return sessionsDTO;
         }
 
         public SessionDTO Get(string token)

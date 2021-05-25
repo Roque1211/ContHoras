@@ -46,10 +46,10 @@ namespace ContHoras
                 options.AddPolicy("EnableCorsForLocalhost",
                     builder =>
                     {
-                        builder.WithOrigins("https://localhost")
-                                            .AllowAnyHeader()
-                                            .AllowAnyMethod()
-                                            .AllowAnyOrigin();
+                        builder.AllowAnyOrigin()
+                         .AllowAnyMethod()
+                         .AllowAnyHeader();
+                        
                     });
             });
 
@@ -152,7 +152,7 @@ namespace ContHoras
 
             //
             app.UseRouting();
-            app.UseCors();
+            app.UseCors("EnableCorsForLocalhost");
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

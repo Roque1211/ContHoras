@@ -26,7 +26,7 @@ namespace DAL.Repositories.Implementations
                 miUser = query.First<User>();
                 userinfo.Id = new Guid(miUser.Id);
                 userinfo.Nombre = miUser.Name;
-                userinfo.Apellidos = miUser.Mail;
+                userinfo.Apellidos = miUser.Surname;
                 userinfo.Email = miUser.Mail;
                 userinfo.Rol = miUser.Rol;
                 return userinfo;

@@ -5,11 +5,14 @@ using System.Threading.Tasks;
 using BL.Contracts;
 using Core.DTO;
 using Swashbuckle.AspNetCore.Annotations;
+using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+
     public class SessionController : ControllerBase
     {
         public ISessionBL _sessionBL { get; set; }
@@ -22,24 +25,29 @@ namespace API.Controllers
         [HttpGet]
         [Route("/api/session/getall")]
 
-        public IEnumerable<string> GetAll()
+        public IEnumerable<SessionDTO> GetAll()
         {
             return _sessionBL.GetAll();
         }
 
         // GET devuelve una session con un token determinado
-        [HttpGet("get/{token}")]
-        [SwaggerOperation("get/{token}")]
+        [HttpGet("/api/session/get {token}")]
+        [SwaggerOperation("get {token}")]
+        [AllowAnonymous]
+        [EnableCors("EnableCorsForLocalhost")]
+
         public SessionDTO Get(String token)
         {
             return _sessionBL.Get(token);
         }
         // GET devuelve el rol del usuario con la session abierta que corresponde al token enviado
-        [HttpGet("getrole/{token}")]
-        [SwaggerOperation("getrole/{token}")]
+        [HttpGet("/api/session/getrole")]
+        [SwaggerOperation("/getrole")]
+        [AllowAnonymous]
+        [EnableCors("EnableCorsForLocalhost")]
         public async Task<IActionResult> GetRole(String token)
         {
-            if (_sessionBL.CheckRole(token))
+            if (token != null & _sessionBL.CheckToken(token))
             {
                 return Ok(_sessionBL.GetRole(token));
             }
@@ -49,7 +57,7 @@ namespace API.Controllers
             }
         }
         // Modifica una session
-        [HttpPut("{token}")]
+        [HttpPut("/api/session/put")]
         public void Put(string session)
         {
         }

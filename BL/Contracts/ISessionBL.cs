@@ -8,12 +8,11 @@ namespace BL.Contracts
 {
     public interface ISessionBL
     {
-        
-
+       
         void Add(SessionDTO sessionDTO);
         void StartSession(string token, Guid id);
         String GetRole(string token);
-        IEnumerable<string> GetAll();
+        IEnumerable<SessionDTO> GetAll();
         SessionDTO Get(string token);
         bool CheckRole(string token);
         bool CheckToken(String token);

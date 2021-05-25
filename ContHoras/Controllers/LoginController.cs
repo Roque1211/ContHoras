@@ -12,6 +12,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace Api.Controllers
 {
     [Route("api/[controller]")]
@@ -38,11 +39,11 @@ namespace Api.Controllers
         [EnableCors("EnableCorsForLocalhost")]
         public async Task<IActionResult> Login(UsuarioDTO usuarioDTO)
         {
-            var _userInfo = await AutenticarUsuarioAsync(usuarioDTO);
-            if (_userInfo != null)
+            var userInfo = await AutenticarUsuarioAsync(usuarioDTO);
+            if (userInfo != null)
             {
-                String token = GenerarTokenJWT(_userInfo);
-                _sessionBL.StartSession(token,usuarioDTO.id);
+                String token = GenerarTokenJWT(userInfo);
+                _sessionBL.StartSession(token,userInfo.Id);
                 return Ok(JsonConvert.SerializeObject(token));
             }
             else

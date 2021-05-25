@@ -10,7 +10,7 @@ namespace DAL.Repositories.Contracts
         void Add(SessionDTO curSession);
         String GetRole(String token);
         bool checkToken(string token);
-        IEnumerable<string> GetAll();
+        IEnumerable<SessionDTO> GetAll();
         SessionDTO Get(string token);
     }
 

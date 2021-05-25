@@ -10,10 +10,12 @@ namespace BL.Implementations
     public class SessionBL:ISessionBL
     {
         public ISessionRepository _sessionRepository { get; set; }
+        public IUsuarioRepository _usuarioRepository { get; set; }
  
-        public SessionBL(ISessionRepository sessionRepository)
+        public SessionBL(ISessionRepository sessionRepository, IUsuarioRepository usuarioRepository)
         {
             _sessionRepository = sessionRepository;
+            _usuarioRepository = usuarioRepository;
         }
 
         // check if a token exists and is valid
@@ -28,13 +30,15 @@ namespace BL.Implementations
             _sessionRepository.Add(sessionDTO);
         }
         // comienza una sessioin
-        public void StartSession(string token, Guid id)
+        public void StartSession(string token, Guid guid)
         {
             // inicia la sesión
             {
                 var curSession = new SessionDTO();
+                String id = guid.ToString();
 
                 curSession.sessid = Guid.NewGuid();
+                curSession.sessuser = _usuarioRepository.Get(id).Id;
                 curSession.sesstoken = token;
                 curSession.sesstart = DateTime.Now;
                 curSession.sessend = null;
@@ -49,7 +53,7 @@ namespace BL.Implementations
         }
 
         // devuelve todas las sesiones
-        public IEnumerable<string> GetAll()
+        public IEnumerable<SessionDTO> GetAll()
         {
             return _sessionRepository.GetAll();
         }
