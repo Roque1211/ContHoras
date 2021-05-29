@@ -8,6 +8,7 @@ namespace DAL.models
         public User()
         {
             Cabhoras = new HashSet<Cabhoras>();
+            Daily = new HashSet<Daily>();
             Session = new HashSet<Session>();
             UserProject = new HashSet<UserProject>();
         }
@@ -23,6 +24,7 @@ namespace DAL.models
         public DateTime? FirstLogin { get; set; }
 
         public virtual ICollection<Cabhoras> Cabhoras { get; set; }
+        public virtual ICollection<Daily> Daily { get; set; }
         public virtual ICollection<Session> Session { get; set; }
         public virtual ICollection<UserProject> UserProject { get; set; }
     }

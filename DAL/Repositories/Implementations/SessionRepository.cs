@@ -2,6 +2,7 @@
 using Core.DTO;
 using DAL.models;
 using DAL.Repositories.Contracts;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,10 +33,13 @@ namespace DAL.Repositories.Implementations
         }
 
         // devuelve el rol del usuario de la session actual
-        public string GetRole(String token)
+        public string GetRole(string token)
         {
-            var miSess = _context.Session.Where(b => b.Sesstoken == token).ElementAt(0);
-            return _context.User.Find(miSess.Sessuser).Rol;
+            var miSess = _context.Session.Single(b => b.Sesstoken == token);
+            string role = _context.User.Find(miSess.Sessuser).Rol;
+            string result = new string ("{ role: " + role + " }");
+            string output = JsonConvert.SerializeObject(result);
+            return output;
         }
 
         // chequea que el token es válido
@@ -43,18 +47,26 @@ namespace DAL.Repositories.Implementations
         {
             var miSess = _context.Session.Single(s => s.Sesstoken == token);
 
-            if  (miSess.Sesstoken == token && miSess.Sessend == null && (miSess.Sessend.Value.Minute - miSess.Sesstart.Value.Minute) <  Constants.SESSION_EXPIRED_MINUTES)
+            if (!(miSess.Sessend is null))
             {
-                // session correcta
-
-                return true;
-            } else
+                if ((miSess.Sessend.Value - miSess.Sesstart.Value).Minutes > Constants.SESSION_EXPIRED_MINUTES)
+                {
+                    // la session ha expirado
+                    miSess.Sessend = DateTime.Now;
+                    _context.Session.Update(miSess);
+                    _context.SaveChanges();
+                    return false;
+                }
+                else
+                {
+                    // session correcta
+                    return true;
+                }
+            }
+            else
             {
                 // session expirada
-                miSess.Sessend = DateTime.Now;
-                _context.Session.Update(miSess);
-                _context.SaveChanges();
-                return false;
+                return true;
             }
         }
 

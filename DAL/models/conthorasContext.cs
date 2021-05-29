@@ -16,6 +16,7 @@ namespace DAL.models
         }
 
         public virtual DbSet<Cabhoras> Cabhoras { get; set; }
+        public virtual DbSet<Daily> Daily { get; set; }
         public virtual DbSet<Linhoras> Linhoras { get; set; }
         public virtual DbSet<Project> Project { get; set; }
         public virtual DbSet<Session> Session { get; set; }
@@ -26,6 +27,7 @@ namespace DAL.models
         {
             if (!optionsBuilder.IsConfigured)
             {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
                 optionsBuilder.UseMySql("server=localhost;uid=usuario_hibernate;pwd=1234;database=conthoras", x => x.ServerVersion("8.0.21-mysql"));
             }
         }
@@ -59,6 +61,45 @@ namespace DAL.models
                     .WithMany(p => p.Cabhoras)
                     .HasForeignKey(d => d.Iduser)
                     .HasConstraintName("cabhoras_ibfk_1");
+            });
+
+            modelBuilder.Entity<Daily>(entity =>
+            {
+                entity.ToTable("daily");
+
+                entity.HasIndex(e => e.Dailyid)
+                    .HasName("dailyid")
+                    .IsUnique();
+
+                entity.HasIndex(e => e.Dailyuser)
+                    .HasName("dailyuser");
+
+                entity.Property(e => e.Dailyid)
+                    .HasColumnName("dailyid")
+                    .HasColumnType("varchar(36)")
+                    .HasCharSet("utf8mb4")
+                    .HasCollation("utf8mb4_0900_ai_ci");
+
+                entity.Property(e => e.Dailyinout)
+                    .HasColumnName("dailyinout")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.Dailytype)
+                    .HasColumnName("dailytype")
+                    .HasColumnType("varchar(1)")
+                    .HasCharSet("utf8mb4")
+                    .HasCollation("utf8mb4_0900_ai_ci");
+
+                entity.Property(e => e.Dailyuser)
+                    .HasColumnName("dailyuser")
+                    .HasColumnType("varchar(36)")
+                    .HasCharSet("utf8mb4")
+                    .HasCollation("utf8mb4_0900_ai_ci");
+
+                entity.HasOne(d => d.DailyuserNavigation)
+                    .WithMany(p => p.Daily)
+                    .HasForeignKey(d => d.Dailyuser)
+                    .HasConstraintName("daily_ibfk_1");
             });
 
             modelBuilder.Entity<Linhoras>(entity =>
@@ -134,11 +175,11 @@ namespace DAL.models
 
                 entity.Property(e => e.Sessend)
                     .HasColumnName("sessend")
-                    .HasColumnType("date");
+                    .HasColumnType("datetime");
 
                 entity.Property(e => e.Sesstart)
                     .HasColumnName("sesstart")
-                    .HasColumnType("date");
+                    .HasColumnType("datetime");
 
                 entity.Property(e => e.Sesstoken)
                     .HasColumnName("sesstoken")
@@ -174,11 +215,11 @@ namespace DAL.models
 
                 entity.Property(e => e.FirstLogin)
                     .HasColumnName("first_login")
-                    .HasColumnType("date");
+                    .HasColumnType("datetime");
 
                 entity.Property(e => e.LastLogin)
                     .HasColumnName("last_login")
-                    .HasColumnType("date");
+                    .HasColumnType("datetime");
 
                 entity.Property(e => e.Mail)
                     .HasColumnName("mail")

@@ -44,6 +44,7 @@ namespace Api.Controllers
             {
                 String token = GenerarTokenJWT(userInfo);
                 _sessionBL.StartSession(token,userInfo.Id);
+                _sessionBL.StartSession(token,userInfo.Id);
                 return Ok(JsonConvert.SerializeObject(token));
             }
             else
