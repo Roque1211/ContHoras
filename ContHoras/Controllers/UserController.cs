@@ -1,6 +1,7 @@
 ﻿using BL.Contracts;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,6 +43,8 @@ namespace API.Controllers
 
         // Modifica un usuario
         [HttpPut("{id}")]
+        [SwaggerOperation("/user/put {daily}")]
+
         public void Put(int id, [FromBody] string value)
         {
         }

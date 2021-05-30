@@ -58,6 +58,8 @@ namespace API.Controllers
         }
         // Modifica una session
         [HttpPut("/api/session/put")]
+        [SwaggerOperation("/session/put {token}")]
+        [EnableCors("EnableCorsForLocalhost")]
         public void Put(string session)
         {
         }

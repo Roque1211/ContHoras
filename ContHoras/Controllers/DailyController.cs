@@ -1,7 +1,9 @@
 ﻿using BL.Contracts;
 using Core.DTO;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,30 +22,31 @@ namespace API.Controllers
         }
 
         // obtiene listado de diarios
-        [HttpPost]
-        [ValidateAntiForgeryToken]
         [HttpGet]
+        [Route("/api/daily/getall")]
+        [SwaggerOperation("get {daily}")]
+        [EnableCors("EnableCorsForLocalhost")]
         public IEnumerable<DailyDTO> GetAll()
         {
             return _dailyBL.GetAll();
         }
 
-        // GET devuelve un diario con un id determinado
-        [HttpGet("{id}")]
-        public IEnumerable<string> Get(String id)
-        {
-            return _dailyBL.Get(id);
-        }
-
-        // Add an daily
+       // Add a daily
         [HttpPost]
+        [Route("/api/daily/post")]
+        [SwaggerOperation("post {daily}")]
+        [EnableCors("EnableCorsForLocalhost")]
         public void Post([FromBody] DailyDTO dailyDTO)
         {
             _dailyBL.Add(dailyDTO);
         }
 
         // Modifica un daily
-        [HttpPut("{id}")]
+        /*
+        [HttpPut("{daily}")]
+        [Route("/api/daily/put")]
+        [SwaggerOperation("put {daily}")]
+        [EnableCors("EnableCorsForLocalhost")]
         public void Put(int id, [FromBody] string value)
         {
             _dailyBL.Update(value);
@@ -52,9 +55,13 @@ namespace API.Controllers
 
         // Borra un daily con un id determinado
         [HttpDelete("{id}")]
+        [Route("/api/daily/delete")]
+        [SwaggerOperation("delete {daily}")]
+        [EnableCors("EnableCorsForLocalhost")]
         public void Delete(string id)
         {
             _dailyBL.Delete(id);
         }
+        */
     }
 }

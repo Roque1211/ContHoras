@@ -29,7 +29,7 @@ namespace BL.Implementations
         {
             _sessionRepository.Add(sessionDTO);
         }
-        // comienza una sessioin
+        // comienza una session
         public void StartSession(string token, Guid guid)
         {
             // inicia la sesión

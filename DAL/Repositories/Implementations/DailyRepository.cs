@@ -23,12 +23,23 @@ namespace DAL.Repositories.Implementations
 
             foreach (var d in dailys)
             {
+
+                string tipo = "";
+                var miUser = _context.User.Find(d.Dailyuser);
+                if (d.Dailytype == "E")
+                {
+                    tipo = "Entrada";
+                } else
+                {
+                    tipo = "Salida";
+                }
+
                 var daily = new DailyDTO
                 {
                     dailyId = new Guid(d.Dailyid),
-                    dailyInout = d.Dailyinout,
-                    dailyType = d.Dailytype,
-                    dailyUser = new Guid(d.Dailyuser)
+                    dailyInout = d.Dailyinout.ToString(),
+                    dailyType = tipo,
+                    dailyUser = miUser.Name + " " + miUser.Surname
                 };
                 dailysDTO.Add(daily);
             }
@@ -38,12 +49,16 @@ namespace DAL.Repositories.Implementations
 
         public void Add(DailyDTO dailyDTO)
         {
+            var query = _context.Session.Where(s => s.Sesstoken == dailyDTO.token);
+            Session miSes = query.First<Session>();
+
             var miDaily = new Daily();
 
             miDaily.Dailyid = Guid.NewGuid().ToString();
-            miDaily.Dailyinout = dailyDTO.dailyInout;
-            miDaily.Dailytype = dailyDTO.dailyType;
-            miDaily.Dailyuser = dailyDTO.dailyUser.ToString();
+            //miDaily.Dailyinout = dailyDTO.dailyInout;
+            miDaily.Dailyinout = DateTime.Now;
+            miDaily.Dailytype = dailyDTO.dailyType.ElementAt(0).ToString();
+            miDaily.Dailyuser = miSes.Sessuser.ToString();
 
             _context.Daily.Add(miDaily);
             _context.SaveChanges();
