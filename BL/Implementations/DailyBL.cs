@@ -40,5 +40,10 @@ namespace BL.Implementations
         {
             throw new NotImplementedException();
         }
+
+        public IEnumerable<DailyDTO> GetAllUser(UsuarioDTO usuarioDTO)
+        {
+            return _dailyRepository.GetAllUser(usuarioDTO);
+        }
     }
 }

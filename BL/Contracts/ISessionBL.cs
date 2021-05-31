@@ -11,7 +11,7 @@ namespace BL.Contracts
        
         void Add(SessionDTO sessionDTO);
         void StartSession(string token, Guid id);
-        String GetRole(string token);
+        UsuarioDTO GetRole(string token);
         IEnumerable<SessionDTO> GetAll();
         SessionDTO Get(string token);
         bool CheckRole(string token);

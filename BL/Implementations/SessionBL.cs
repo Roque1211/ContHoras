@@ -47,7 +47,7 @@ namespace BL.Implementations
         }
 
         // devuelve role del usuario con un token determinado
-        public String GetRole(string token)
+        public UsuarioDTO GetRole(string token)
         {
            return _sessionRepository.GetRole(token);
         }

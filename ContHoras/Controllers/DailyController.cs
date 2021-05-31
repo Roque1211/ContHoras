@@ -21,17 +21,26 @@ namespace API.Controllers
             _dailyBL = dailyBL;
         }
 
-        // obtiene listado de diarios
+        // obtiene listado de diarios para usuario admin
         [HttpGet]
         [Route("/api/daily/getall")]
-        [SwaggerOperation("get {daily}")]
+        [SwaggerOperation("getall")]
         [EnableCors("EnableCorsForLocalhost")]
         public IEnumerable<DailyDTO> GetAll()
         {
             return _dailyBL.GetAll();
         }
+        // obtiene listado de diarios para usuario normal
+        [HttpPost]
+        [Route("/api/daily/getalluser")]
+        [SwaggerOperation("getalluser")]
+        [EnableCors("EnableCorsForLocalhost")]
+        public IEnumerable<DailyDTO> GetAllUser([FromBody] UsuarioDTO usuarioDTO)
+        {
+            return _dailyBL.GetAllUser(usuarioDTO);
+        }
 
-       // Add a daily
+        // Add a daily
         [HttpPost]
         [Route("/api/daily/post")]
         [SwaggerOperation("post {daily}")]
@@ -41,27 +50,7 @@ namespace API.Controllers
             _dailyBL.Add(dailyDTO);
         }
 
-        // Modifica un daily
-        /*
-        [HttpPut("{daily}")]
-        [Route("/api/daily/put")]
-        [SwaggerOperation("put {daily}")]
-        [EnableCors("EnableCorsForLocalhost")]
-        public void Put(int id, [FromBody] string value)
-        {
-            _dailyBL.Update(value);
 
-        }
-
-        // Borra un daily con un id determinado
-        [HttpDelete("{id}")]
-        [Route("/api/daily/delete")]
-        [SwaggerOperation("delete {daily}")]
-        [EnableCors("EnableCorsForLocalhost")]
-        public void Delete(string id)
-        {
-            _dailyBL.Delete(id);
-        }
-        */
     }
 }
+

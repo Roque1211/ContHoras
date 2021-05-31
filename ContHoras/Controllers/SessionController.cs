@@ -45,15 +45,15 @@ namespace API.Controllers
         [SwaggerOperation("/getrole")]
         [AllowAnonymous]
         [EnableCors("EnableCorsForLocalhost")]
-        public async Task<IActionResult> GetRole(String token)
+        public UsuarioDTO GetRole(String token)
         {
             if (token != null & _sessionBL.CheckToken(token))
             {
-                return Ok(_sessionBL.GetRole(token));
+                return _sessionBL.GetRole(token);
             }
             else
             {
-                return Unauthorized();
+                return null;
             }
         }
         // Modifica una session

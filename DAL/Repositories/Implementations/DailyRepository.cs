@@ -63,5 +63,37 @@ namespace DAL.Repositories.Implementations
             _context.Daily.Add(miDaily);
             _context.SaveChanges();
         }
+
+        public IEnumerable<DailyDTO> GetAllUser(UsuarioDTO usuarioDTO)
+        {
+            var dailys = _context.Daily.Where(d => d.Dailyuser == usuarioDTO.id.ToString()).ToList();
+            List<DailyDTO> dailysDTO = new List<DailyDTO>();
+
+            foreach (var d in dailys)
+            {
+
+                string tipo = "";
+                var miUser = _context.User.Find(d.Dailyuser);
+                if (d.Dailytype == "E")
+                {
+                    tipo = "Entrada";
+                }
+                else
+                {
+                    tipo = "Salida";
+                }
+
+                var daily = new DailyDTO
+                {
+                    dailyId = new Guid(d.Dailyid),
+                    dailyInout = d.Dailyinout.ToString(),
+                    dailyType = tipo,
+                    dailyUser = miUser.Name + " " + miUser.Surname
+                };
+                dailysDTO.Add(daily);
+            }
+
+            return dailysDTO;
+        }
     }
 }

@@ -8,7 +8,7 @@ namespace DAL.Repositories.Contracts
     public interface ISessionRepository
     {
         void Add(SessionDTO curSession);
-        String GetRole(String token);
+        UsuarioDTO GetRole(String token);
         bool checkToken(string token);
         IEnumerable<SessionDTO> GetAll();
         SessionDTO Get(string token);

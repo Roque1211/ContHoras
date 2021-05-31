@@ -13,5 +13,6 @@ namespace BL.Contracts
         void Add(DailyDTO dailyDTO);
         void Update(string value);
         void Delete(string id);
+        IEnumerable<DailyDTO> GetAllUser(UsuarioDTO usuarioDTO);
     }
 }

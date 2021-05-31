@@ -29,17 +29,41 @@ namespace DAL.Repositories.Implementations
             miSes.Sessend = sessionDTO.sessend;
 
             _context.Session.Add(miSes);
+// modifica firstSession y/o lastsession en usuario
+            User miUser = new User();
+            miUser = _context.User.Single(u => u.Id == miSes.Sessuser);
+            if (miUser.FirstLogin != null)
+            {
+                miUser.LastLogin = DateTime.Now;
+            }
+            else 
+            {
+                miUser.FirstLogin = DateTime.Now;
+                miUser.LastLogin = DateTime.Now;
+            };
+            _context.Update(miUser);
             _context.SaveChanges();
         }
 
         // devuelve el rol del usuario de la session actual
-        public string GetRole(string token)
+        public UsuarioDTO GetRole(string token)
         {
             var miSess = _context.Session.Single(b => b.Sesstoken == token);
-            string role = _context.User.Find(miSess.Sessuser).Rol;
-            string result = new string ("{ role: " + role + " }");
-            string output = JsonConvert.SerializeObject(result);
-            return output;
+            var miUser = _context.User.Single(u => u.Id == miSess.Sessuser);
+            var usuario = new UsuarioDTO
+            {
+                id = Guid.Parse(miUser.Id),
+                nick = miUser.Nick,
+                pwd = "",
+                name = miUser.Name,
+                surname = miUser.Surname,
+                rol = miUser.Rol,
+                lastlogin = miUser.LastLogin,
+                mail = miUser.Mail,
+                firstlogin =miUser.FirstLogin,
+            };
+
+            return usuario;
         }
 
         // chequea que el token es válido
