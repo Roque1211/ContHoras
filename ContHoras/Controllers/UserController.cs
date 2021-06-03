@@ -1,4 +1,5 @@
 ﻿using BL.Contracts;
+using Core.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Annotations;
@@ -22,38 +23,44 @@ namespace API.Controllers
         }
         // Devuelve datos de todos los usuarios
         [HttpGet]
-        public IEnumerable<string> GetAll()
+        [Route("/api/user/getall")]
+        public IEnumerable<UsuarioDTO> GetAll()
         {
             return _usuarioBL.GetAll();
         }
 
         // GET devuelve un usuario con un id determinado
-        [HttpGet("{id}")]
-        public string Get(String id)
+        [HttpGet]
+        [Route("/api/user/get")]
+        public UsuarioDTO Get(UsuarioDTO usuarioDTO)
         {
-            return _usuarioBL.Get(id);
+            return _usuarioBL.Get(usuarioDTO);
         }
 
         // Add an user
-        [HttpPost]
-        public void Post([FromBody] string value)
+        [HttpPut]
+        [Route("/api/user/post")]
+
+        public void Add([FromBody] UsuarioDTO usuarioDTO)
         {
-            _usuarioBL.Add(value);
+            _usuarioBL.Add(usuarioDTO);
         }
 
         // Modifica un usuario
-        [HttpPut("{id}")]
-        [SwaggerOperation("/user/put {daily}")]
-
-        public void Put(int id, [FromBody] string value)
+        [HttpPut]
+        [Route("/api/user/put")]
+        [SwaggerOperation("/user/put")]
+        public void Put([FromBody] UsuarioDTO usuarioDTO)
         {
+            _usuarioBL.Put(usuarioDTO);
         }
 
         // Borra un usuario con un id determinado
-        [HttpDelete("{id}")]
-        public void Delete(string id)
+        [HttpPut]
+        [Route("/api/user/delete")]
+        public void Delete([FromBody] UsuarioDTO usuarioDTO)
         {
-            _usuarioBL.Delete(id);
+            _usuarioBL.Delete(usuarioDTO);
         }
     }
 }

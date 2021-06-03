@@ -30,15 +30,17 @@ namespace BL.Implementations
             _sessionRepository.Add(sessionDTO);
         }
         // comienza una session
-        public void StartSession(string token, Guid guid)
+        public void StartSession(string token, string guid)
         {
             // inicia la sesión
             {
                 var curSession = new SessionDTO();
                 String id = guid.ToString();
+                UsuarioDTO miUser = new UsuarioDTO();
+                miUser.id = guid;
 
                 curSession.sessid = Guid.NewGuid();
-                curSession.sessuser = _usuarioRepository.Get(id).Id;
+                curSession.sessuser = _usuarioRepository.Get(miUser).id.ToString();
                 curSession.sesstoken = token;
                 curSession.sesstart = DateTime.Now;
                 curSession.sessend = null;

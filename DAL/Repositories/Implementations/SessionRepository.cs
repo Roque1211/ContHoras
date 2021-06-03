@@ -52,15 +52,15 @@ namespace DAL.Repositories.Implementations
             var miUser = _context.User.Single(u => u.Id == miSess.Sessuser);
             var usuario = new UsuarioDTO
             {
-                id = Guid.Parse(miUser.Id),
+                id = miUser.Id,
                 nick = miUser.Nick,
                 pwd = "",
                 name = miUser.Name,
                 surname = miUser.Surname,
                 rol = miUser.Rol,
-                lastlogin = miUser.LastLogin,
+                lastlogin = miUser.LastLogin.ToString(),
                 mail = miUser.Mail,
-                firstlogin =miUser.FirstLogin,
+                firstlogin =miUser.FirstLogin.ToString(),
             };
 
             return usuario;

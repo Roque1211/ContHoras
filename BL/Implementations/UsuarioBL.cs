@@ -23,35 +23,33 @@ namespace BL.Implementations
         }
 
         // add user
-        public void Add(string value)
+        public void Add(UsuarioDTO usuarioDTO)
         {
-            UsuarioDTO usuarioDTO =  JsonConvert.DeserializeObject<UsuarioDTO>(value);
             _usuarioRepository.Add(usuarioDTO);
         }
 
         // devuelve listado de usuarios
-        public IEnumerable<String> GetAll()
+        public IEnumerable<UsuarioDTO> GetAll()
         {
-            var usuarios = _usuarioRepository.GetAll();
-            var strList = new List<String>();
-
-            foreach (UsuarioDTO u in  usuarios )
-            {
-                strList.Add(JsonConvert.SerializeObject(u));
-            }
-            return strList;
+            return _usuarioRepository.GetAll();
+  
         }
 
         // devuelve usuario con un id determinado
-        string IUsuarioBL.Get(string id)
+        UsuarioDTO IUsuarioBL.Get(UsuarioDTO usuarioDTO)
         {
-            return JsonConvert.SerializeObject(_usuarioRepository.Get(id));
+            return _usuarioRepository.Get(usuarioDTO);
         }
 
         // borrar usuario
-        public void Delete(string id)
+        public void Delete(UsuarioDTO usuarioDTO)
         {
-            _usuarioRepository.Delete(id);
+            _usuarioRepository.Delete(usuarioDTO);
+        }
+
+        public void Put(UsuarioDTO usuarioDTO)
+        {
+            _usuarioRepository.Put(usuarioDTO);
         }
     }
 }

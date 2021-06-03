@@ -12,9 +12,10 @@ namespace BL.Contracts
     public interface IUsuarioBL
     {
         UsuarioInfo Login(UsuarioDTO usuarioDTO);
-        void Add(string usuarioDTO);
-        IEnumerable<String> GetAll();
-        string Get(string id);
-        void Delete(string id);
+        void Add(UsuarioDTO usuarioDTO);
+        IEnumerable<UsuarioDTO> GetAll();
+        UsuarioDTO Get(UsuarioDTO usuario);
+        void Delete(UsuarioDTO usuario);
+        void Put(UsuarioDTO usuarioDTO);
     }
 }

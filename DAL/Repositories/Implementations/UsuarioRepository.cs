@@ -49,8 +49,8 @@ namespace DAL.Repositories.Implementations
             miUser.Surname = usuarioDTO.surname;
             miUser.Mail = usuarioDTO.mail;
             miUser.Rol = usuarioDTO.rol;
-            miUser.LastLogin = usuarioDTO.lastlogin;
-            miUser.FirstLogin = usuarioDTO.firstlogin;
+            if (usuarioDTO.lastlogin != "") { miUser.LastLogin = DateTime.Parse(usuarioDTO.lastlogin);} else { miUser.LastLogin = null; };
+            if (usuarioDTO.firstlogin != "") { miUser.FirstLogin = DateTime.Parse(usuarioDTO.firstlogin); } else { miUser.FirstLogin = null; };
 
             _context.User.Add(miUser);
             _context.SaveChanges();
@@ -66,14 +66,15 @@ namespace DAL.Repositories.Implementations
             {
                 var usuario = new UsuarioDTO
                 {
-                    id = new Guid(u.Id),
+                    id = u.Id,
                     nick = u.Nick,
                     pwd = u.Pwd,
                     name = u.Name,
+                    surname = u.Surname,
                     rol = u.Rol,
-                    lastlogin = u.LastLogin,
+                    lastlogin = u.LastLogin.ToString(),
                     mail = u.Mail,
-                    firstlogin = u.FirstLogin,
+                    firstlogin = u.FirstLogin.ToString(),
                 };
                 usuariosdto.Add(usuario);
             }
@@ -83,15 +84,57 @@ namespace DAL.Repositories.Implementations
         }
 
         //devuelve un usuario con un id determinado
-        User IUsuarioRepository.Get(string id)
+        public UsuarioDTO Get(UsuarioDTO usuarioDTO)
         {
-            return _context.User.Find(id);
+            User miUser = _context.User.Find(usuarioDTO.id.ToString());
+            UsuarioDTO result = new UsuarioDTO();
+
+            result.id = miUser.Id;
+            result.nick = miUser.Nick;
+            result.pwd = miUser.Pwd;
+            result.name = miUser.Name;
+            result.surname = miUser.Surname;
+            result.mail = miUser.Mail;
+            result.rol = miUser.Rol;
+            result.lastlogin = miUser.LastLogin.ToString();
+            result.firstlogin = miUser.FirstLogin.ToString();
+            return result;
         }
 
         // borra un usuario
-        public void Delete(string id)
+        public void Delete(UsuarioDTO usuarioDTO)
         {
-            _context.Session.Remove(_context.Session.Find(id));
+            User miUser = new User();
+
+            miUser.Id = usuarioDTO.id.ToString();
+            miUser.Nick = usuarioDTO.nick;
+            miUser.Pwd = usuarioDTO.pwd;
+            miUser.Name = usuarioDTO.name;
+            miUser.Surname = usuarioDTO.surname;
+            miUser.Mail = usuarioDTO.mail;
+            miUser.Rol = usuarioDTO.rol;
+            miUser.LastLogin = DateTime.Parse(usuarioDTO.lastlogin);
+            miUser.FirstLogin = DateTime.Parse(usuarioDTO.firstlogin);
+
+            _context.User.Remove(miUser);
+            _context.SaveChanges();
+        }
+
+        public void Put(UsuarioDTO usuarioDTO)
+        {
+            User miUser = new User();
+
+            miUser.Id = usuarioDTO.id.ToString();
+            miUser.Nick = usuarioDTO.nick;
+            miUser.Pwd = usuarioDTO.pwd;
+            miUser.Name = usuarioDTO.name;
+            miUser.Surname = usuarioDTO.surname;
+            miUser.Mail = usuarioDTO.mail;
+            miUser.Rol = usuarioDTO.rol;
+            miUser.LastLogin = DateTime.Parse(usuarioDTO.lastlogin);
+            miUser.FirstLogin = DateTime.Parse(usuarioDTO.firstlogin);
+
+            _context.User.Update(miUser);
             _context.SaveChanges();
         }
     }

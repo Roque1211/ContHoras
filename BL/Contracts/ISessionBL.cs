@@ -10,7 +10,7 @@ namespace BL.Contracts
     {
        
         void Add(SessionDTO sessionDTO);
-        void StartSession(string token, Guid id);
+        void StartSession(string token, string id);
         UsuarioDTO GetRole(string token);
         IEnumerable<SessionDTO> GetAll();
         SessionDTO Get(string token);

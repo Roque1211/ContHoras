@@ -43,7 +43,7 @@ namespace Api.Controllers
             if (userInfo != null)
             {
                 String token = GenerarTokenJWT(userInfo);
-                _sessionBL.StartSession(token,userInfo.Id);
+                _sessionBL.StartSession(token,userInfo.Id.ToString());
                 return Ok(JsonConvert.SerializeObject(token));
             }
             else
