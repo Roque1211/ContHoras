@@ -8,11 +8,9 @@ namespace BL.Contracts
     public interface IDailyBL
     {
         IEnumerable<DailyDTO> GetAll();
-        IEnumerable<string> Get(string id);
-
         void Add(DailyDTO dailyDTO);
-        void Update(string value);
-        void Delete(string id);
+        void Put(DailyDTO dailyDTO);
+        void Delete(DailyDTO dailyDTO);
         IEnumerable<DailyDTO> GetAllUser(UsuarioDTO usuarioDTO);
     }
 }

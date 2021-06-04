@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using Swashbuckle.AspNetCore.Annotations;
+using BL.Contracts;
+using Core.DTO;
 
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -12,47 +14,52 @@ namespace API.Controllers
     [ApiController]
     public class ProjectController : ControllerBase
     {
-        // GET: api/<ValuesController>
-        [HttpGet, Route("getall")]
+        public IProjectBL _projectBL { get; set; }
+        public ProjectController(IProjectBL projectBL)
+        {
+            _projectBL = projectBL;
+        }
+        // Devuelve datos de todos los proyectos
+        [HttpGet, Route("/api/project/getall")]
         [SwaggerOperation("getall")]
 
-        [Authorize]
-        public IEnumerable<string> Get()
+        public IEnumerable<ProjectDTO> Get()
         {
-            return new string[] { "value1", "value2" };
+            return _projectBL.GetAll();
         }
 
-        // get by id
-
-        [HttpGet("{id}")]
-        [SwaggerOperation("get/{id}")]
-
-        [Authorize]
-        public string Get(int id)
+        // GET devuelve un Project con un id determinado
+        [HttpGet]
+        [Route("/api/project/get")]
+        public ProjectDTO Get(ProjectDTO ProjectDTO)
         {
-            return "value";
+            return _projectBL.Get(ProjectDTO);
         }
 
+        // Add an project
+        [HttpPut]
+        [Route("/api/project/post")]
 
-        // POST api/<ValuesController>
-        [HttpPost]
-        [Authorize]
-        public void Post([FromBody] string value)
+        public void Add([FromBody] ProjectDTO ProjectDTO)
         {
+            _projectBL.Add(ProjectDTO);
         }
 
-        // PUT api/<ValuesController>/5
-        [HttpPut("{id}")]
-        [Authorize]
-        public void Put(int id, [FromBody] string value)
+        // Modifica un Project
+        [HttpPut]
+        [Route("/api/project/put")]
+        [SwaggerOperation("/project/put")]
+        public void Put([FromBody] ProjectDTO ProjectDTO)
         {
+            _projectBL.Put(ProjectDTO);
         }
 
-        // DELETE api/<ValuesController>/5
-        [HttpDelete("{id}")]
-        [Authorize]
-        public void Delete(int id)
+        // Borra un Project con un id determinado
+        [HttpPut]
+        [Route("/api/project/delete")]
+        public void Delete([FromBody] ProjectDTO ProjectDTO)
         {
+            _projectBL.Delete(ProjectDTO);
         }
     }
 }

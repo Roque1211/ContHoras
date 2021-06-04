@@ -10,6 +10,8 @@ namespace DAL.Repositories.Contracts
         IEnumerable<DailyDTO> GetAll();
         void Add(DailyDTO dailyDTO);
         IEnumerable<DailyDTO> GetAllUser(UsuarioDTO usuarioDTO);
+        void Put(DailyDTO dailyDTO);
+        void Delete(DailyDTO dailyDTO);
     }
 
 }

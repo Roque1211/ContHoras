@@ -39,6 +39,9 @@ namespace ContHoras
             services.AddScoped<ISessionRepository, SessionRepository>();
             services.AddScoped<IDailyBL, DailyBL>();
             services.AddScoped<IDailyRepository, DailyRepository>();
+            services.AddScoped<IProjectBL, ProjectBL>();
+            services.AddScoped<IProjectRepository, ProjectRepository>();
+
 
             // directivas CORS para permitir comunicaciones entre orígenes del mismo tipo
             // entre localhost de Angular y el backend

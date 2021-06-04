@@ -21,29 +21,28 @@ namespace BL.Implementations
             return _dailyRepository.GetAll();
         }
 
-        public IEnumerable<string> Get(string id)
-        {
-            throw new NotImplementedException();
-        }
+
 
         public void Add(DailyDTO dailyDTO)
         {
             _dailyRepository.Add(dailyDTO);
         }
 
-        public void Update(string value)
+        public void Put(DailyDTO dailyDTO)
         {
-            throw new NotImplementedException();
+            _dailyRepository.Put(dailyDTO);
         }
 
-        public void Delete(string id)
+        public void Delete(DailyDTO dailyDTO)
         {
-            throw new NotImplementedException();
+            _dailyRepository.Delete(dailyDTO);
         }
 
         public IEnumerable<DailyDTO> GetAllUser(UsuarioDTO usuarioDTO)
         {
             return _dailyRepository.GetAllUser(usuarioDTO);
         }
+
+
     }
 }

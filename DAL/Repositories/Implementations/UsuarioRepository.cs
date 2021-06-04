@@ -113,8 +113,8 @@ namespace DAL.Repositories.Implementations
             miUser.Surname = usuarioDTO.surname;
             miUser.Mail = usuarioDTO.mail;
             miUser.Rol = usuarioDTO.rol;
-            miUser.LastLogin = DateTime.Parse(usuarioDTO.lastlogin);
-            miUser.FirstLogin = DateTime.Parse(usuarioDTO.firstlogin);
+            if (usuarioDTO.lastlogin != "") { miUser.LastLogin = DateTime.Parse(usuarioDTO.lastlogin); } else { miUser.LastLogin = null; };
+            if (usuarioDTO.firstlogin != "") { miUser.FirstLogin = DateTime.Parse(usuarioDTO.firstlogin); } else { miUser.FirstLogin = null; };
 
             _context.User.Remove(miUser);
             _context.SaveChanges();
@@ -131,9 +131,8 @@ namespace DAL.Repositories.Implementations
             miUser.Surname = usuarioDTO.surname;
             miUser.Mail = usuarioDTO.mail;
             miUser.Rol = usuarioDTO.rol;
-            miUser.LastLogin = DateTime.Parse(usuarioDTO.lastlogin);
-            miUser.FirstLogin = DateTime.Parse(usuarioDTO.firstlogin);
-
+            if (usuarioDTO.lastlogin != "") { miUser.LastLogin = DateTime.Parse(usuarioDTO.lastlogin); } else { miUser.LastLogin = null; };
+            if (usuarioDTO.firstlogin != "") { miUser.FirstLogin = DateTime.Parse(usuarioDTO.firstlogin); } else { miUser.FirstLogin = null; };
             _context.User.Update(miUser);
             _context.SaveChanges();
         }

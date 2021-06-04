@@ -50,6 +50,22 @@ namespace API.Controllers
             _dailyBL.Add(dailyDTO);
         }
 
+        // Modifica un daily
+        [HttpPut]
+        [Route("/api/daily/put")]
+        [SwaggerOperation("/daily/put")]
+        public void Put([FromBody] DailyDTO dailyDTO)
+        {
+            _dailyBL.Put(dailyDTO);
+        }
+
+        // Borra un daily
+        [HttpPut]
+        [Route("/api/daily/delete")]
+        public void Delete([FromBody] DailyDTO dailyDTO)
+        {
+            _dailyBL.Delete(dailyDTO);
+        }
 
     }
 }

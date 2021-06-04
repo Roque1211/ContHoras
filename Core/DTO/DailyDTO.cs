@@ -11,5 +11,7 @@ namespace Core.DTO
         public String dailyType { get; set; }
         public string dailyInout { get; set; }
         public string token { get; set; }
+        public string userId { get; set; }
+
     }
 }
